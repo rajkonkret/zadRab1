@@ -68,8 +68,35 @@ public class FanotExchange {
         channel.close();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, TimeoutException {
+        FanotExchange.declareExchange();
+        FanotExchange.declareBindings();
 
+        Thread subscribe = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    FanotExchange.subscribeMessages();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
 
+        Thread publish = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    FanotExchange.publishMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (TimeoutException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+
+        subscribe.start();
+        publish.start();
     }
 }
