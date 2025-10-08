@@ -21,6 +21,8 @@ public class TestConsumer {
         CancelCallback cancelCallback = consumerTag -> {
             System.out.println(consumerTag);
         };
-        channel.basicConsume("ACQ", true, deliverCallback, cancelCallback);
+//        channel.basicConsume("ACQ", true, deliverCallback, cancelCallback);
+//        channel.basicConsume("MobileQ", true, deliverCallback, cancelCallback);
+        channel.basicConsume("LightQ", true, deliverCallback, cancelCallback);
     }
 }
