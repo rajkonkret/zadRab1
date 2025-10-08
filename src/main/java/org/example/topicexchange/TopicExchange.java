@@ -3,6 +3,7 @@ package org.example.topicexchange;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import org.example.ConnectionManager;
+import org.example.fanoutexchnge.FanotExchange;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -40,5 +41,35 @@ public class TopicExchange {
         TopicExchange.declareQueues();
         TopicExchange.declareExchange();
         TopicExchange.declareBindings();
+
+        Thread subscribe = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    TopicExchange.subscribeMessages();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread publish = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    TopicExchange.publishMessage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (TimeoutException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
+    private static void publishMessage() {
+    }
+
+    private static void subscribeMessages() {
     }
 }
