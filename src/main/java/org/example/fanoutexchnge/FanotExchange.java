@@ -58,6 +58,16 @@ public class FanotExchange {
                 });
     }
 
+    public static void publishMessage() throws IOException, TimeoutException {
+        Channel channel = ConnectionManager.getConnection().createChannel();
+
+        String message = "MAin Power is ON";
+
+        channel.basicPublish("my-fanout-exchange", "", null, message.getBytes());
+
+        channel.close();
+    }
+
     public static void main(String[] args) {
 
 
