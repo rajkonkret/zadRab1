@@ -48,7 +48,7 @@ public class TopicExchange {
                 try {
                     TopicExchange.subscribeMessages();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }
         };
@@ -58,18 +58,36 @@ public class TopicExchange {
             public void run() {
                 try {
                     TopicExchange.publishMessage();
-                } catch (IOException e) {
+                } catch (IOException | TimeoutException e) {
                     e.printStackTrace();
-                } catch (TimeoutException e) {
-                    throw new RuntimeException(e);
                 }
             }
         };
+
+        subscribe.start();
+        publish.start();
     }
 
-    private static void publishMessage() {
+    private static void publishMessage() throws IOException, TimeoutException {
+        Channel channel = ConnectionManager.getConnection().createChannel();
+
+        String message = "Drink a lot of Water and stay Healthy";
+        channel.basicPublish("my-topic-exchange", "health.education", null, message.getBytes());
+
+        channel.close();
     }
 
-    private static void subscribeMessages() {
+    private static void subscribeMessages() throws IOException {
+        Channel channel = ConnectionManager.getConnection().createChannel();
+
+        channel.basicConsume("HealthQ", true, ((consusmerTag, message) -> {
+            System.out.println("HealthQ Queue");
+            System.out.println(consusmerTag);
+            System.out.println("HealthQ: " + new String(message.getBody()));
+            System.out.println(message.getEnvelope());
+        }), consumerTag -> {
+            System.out.println(consumerTag);
+        });
+
     }
 }
