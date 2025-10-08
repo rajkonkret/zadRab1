@@ -27,6 +27,17 @@ public class FanotExchange {
         channel.close();
     }
 
+    public static void declareQueues() throws IOException, TimeoutException {
+        Channel channel = ConnectionManager.getConnection().createChannel();
+
+        channel.queueDeclare("MobileQ", true, false, false, null);
+        channel.queueDeclare("ACQ", true, false, false, null);
+        channel.queueDeclare("LightQ", true, false, false, null);
+
+        channel.close();
+
+    }
+
     public static void subscribeMessages() throws IOException {
         Channel channel = ConnectionManager.getConnection().createChannel();
 
@@ -69,6 +80,7 @@ public class FanotExchange {
     }
 
     public static void main(String[] args) throws IOException, TimeoutException {
+        FanotExchange.declareQueues();
         FanotExchange.declareExchange();
         FanotExchange.declareBindings();
 
