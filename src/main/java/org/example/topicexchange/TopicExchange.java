@@ -77,11 +77,28 @@ public class TopicExchange {
 //        message = "Learn somthing new everyday";
 //        channel.basicPublish("my-topic-exchange", "education", null, message.getBytes());
 
-        message = "Stay fit in Mind and Body"; // wiadomosc nie trafi do kolejki
-        channel.basicPublish("my-topic-exchange", "education.health", null, message.getBytes());
+//        message = "Stay fit in Mind and Body"; // wiadomosc nie trafi do kolejki
+//        channel.basicPublish("my-topic-exchange", "education.health", null, message.getBytes());
+//
+//        message = "Just do it!";
+//        channel.basicPublish("my-topic-exchange", "sports.sports", null, message.getBytes());
+//
+//        message = "Just do it!";
+//        channel.basicPublish("my-topic-exchange", "sports.sports", null, message.getBytes());
 
-        message = "Just do it!"; // wiadomosc nie trafi do kolejki
-        channel.basicPublish("my-topic-exchange", "sports.sports", null, message.getBytes());
+        message = "Just do it!"; // 	#.sports.* # sports.sports  * sports
+        channel.basicPublish("my-topic-exchange", "sports.sports.sports.sports", null, message.getBytes());
+
+        message = "Just do it!"; // 	#.sports.* # sports.sports  * sports
+        // # - dowolna ilośc wyrazów
+        // * - dokładnie jeden wyraz
+        channel.basicPublish("my-topic-exchange", "sports.sports.sports.sports.abc", null, message.getBytes());
+
+        message = "Just do it!"; // 	#.sports.* # sports.sports  * sports
+        // # - dowolna ilośc wyrazów
+        // * - dokładnie jeden wyraz
+        // nie zadziała bo po sports nie ma wyrazu, * wymaga dokładnie jeden wyraz
+        channel.basicPublish("my-topic-exchange", "sports", null, message.getBytes());
 
         channel.close();
     }
