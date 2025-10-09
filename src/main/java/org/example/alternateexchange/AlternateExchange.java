@@ -106,7 +106,7 @@ public class AlternateExchange {
     public static void main(String[] args) throws IOException, TimeoutException {
         AlternateExchange.declareQueues();
         AlternateExchange.declareExchange();
-        TopicExchange.declareBindings();
+        AlternateExchange.declareBindings();
 
         Thread subscribe = new Thread() {
             @Override
