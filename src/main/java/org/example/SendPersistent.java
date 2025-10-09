@@ -20,7 +20,8 @@ public class SendPersistent {
         String message = "Persist Messaage";
         channel.basicPublish("",
                 QUEUE_NAME,
-                MessageProperties.PERSISTENT_TEXT_PLAIN,
+                MessageProperties.PERSISTENT_TEXT_PLAIN,  // delivery_mode:	2
+//                MessageProperties.TEXT_PLAIN, // delivery_mode:	1
                 message.getBytes(StandardCharsets.UTF_8));
 
         System.out.println("Wysłano:" + message);

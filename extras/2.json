@@ -1,0 +1,83 @@
+[
+  {
+    "source": "",
+    "vhost": "/",
+    "destination": "EducationQ",
+    "destination_type": "queue",
+    "routing_key": "EducationQ",
+    "arguments": {},
+    "properties_key": "EducationQ"
+  },
+  {
+    "source": "",
+    "vhost": "/",
+    "destination": "FaultQ",
+    "destination_type": "queue",
+    "routing_key": "FaultQ",
+    "arguments": {},
+    "properties_key": "FaultQ"
+  },
+  {
+    "source": "",
+    "vhost": "/",
+    "destination": "HealthQ",
+    "destination_type": "queue",
+    "routing_key": "HealthQ",
+    "arguments": {},
+    "properties_key": "HealthQ"
+  },
+  {
+    "source": "",
+    "vhost": "/",
+    "destination": "SportsQ",
+    "destination_type": "queue",
+    "routing_key": "SportsQ",
+    "arguments": {},
+    "properties_key": "SportsQ"
+  },
+  {
+    "source": "",
+    "vhost": "/",
+    "destination": "persist_queue",
+    "destination_type": "queue",
+    "routing_key": "persist_queue",
+    "arguments": {},
+    "properties_key": "persist_queue"
+  },
+  {
+    "source": "alt.fanout.exchange",
+    "vhost": "/",
+    "destination": "FaultQ",
+    "destination_type": "queue",
+    "routing_key": "",
+    "arguments": {},
+    "properties_key": "~"
+  },
+  {
+    "source": "alt.topic.exchange",
+    "vhost": "/",
+    "destination": "EducationQ",
+    "destination_type": "queue",
+    "routing_key": "#.education",
+    "arguments": {},
+    "properties_key": "%23.education"
+  },
+  {
+    "source": "alt.topic.exchange",
+    "vhost": "/",
+    "destination": "HealthQ",
+    "destination_type": "queue",
+    "routing_key": "health.*",
+    "arguments": {},
+    "properties_key": "health.%2A"
+  },
+  {
+    "source": "alt.topic.exchange",
+    "vhost": "/",
+    "destination": "SportsQ",
+    "destination_type": "queue",
+    "routing_key": "#.sports.*",
+    "arguments": {},
+    "properties_key": "%23.sports.%2A"
+  }
+]

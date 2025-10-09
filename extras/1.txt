@@ -1,0 +1,15 @@
+docker run -it -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
+
+curl.exe -i -u guest:guest http://localhost:15672/api/vhosts
+
+[{"messages":1,
+"name":"/","recv_oct":680,
+"send_oct":749,"description":
+"Default virtual host","
+metadata":{"description":"Default virtual host","tags":[],"default_queue_type":"classic"},
+"tags":[],"default_queue_type":"classic","messages_ready":1,"messages_unacknowledged":0,
+"protected_from_deletion":false,"tracing":false,"cluster_state":{"rabbit@ad705c3abb74":"running"},"message_stats":
+{"ack":0,"ack_details":{"rate":0.0},"deliver":0,"deliver_details":{"rate":0.0},"deliver_get":3
+,"deliver_get_details":{"rate":0.0},"deliver_no_ack":0,"deliver_no_ack_details":{"rate":0.0},
+"get":3,"get_details":{"rate":0.0},"get_empty":1,
+"get_empty_details":{"rate":0.0},"get_no_ack":0,"get_no_ack_details":{"rate":0.0},"redeliver":0,"redeliver_details":{"rate":0.0}},"recv_oct_details":{"rate":0.0},"send_oct_details":{"rate":0.0},"messages_details":{"rate":0.0},"messages_unacknowledged_details":{"rate":0.0},"messages_ready_details":{"rate":0.0}}]
