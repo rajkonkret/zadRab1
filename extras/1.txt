@@ -33,6 +33,9 @@ management.listener.ssl=true
 management.listener.ssl_opts.cacertfile=/etc/ssl/certs/ca.pem
 management.listener.ssl_opts.certfile=/etc/ssl/certs/server.pem
 management.listener.ssl_opts.keyfile=/etc/ssl/certs/server.key
+management.listener.ssl_options.version.1 = tlsv1.3
+
+ssl_options.version.1 = tlsv1.3
 
 C:\Users\CSComarch\AppData\Roaming\RabbitMQ
 # konfiguracja w pliku conf
@@ -43,3 +46,6 @@ management.listener.port=9000
 listeners.tcp.default=5673
 listeners.tcp.1=5674
 listeners.tcp.2=5675
+
+Shovel
+rabbitmq-plugins enable rabbitmq_shovel rabbitmq_shovel_management
