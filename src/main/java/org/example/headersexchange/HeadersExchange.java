@@ -31,7 +31,7 @@ public class HeadersExchange {
         channel.close();
     }
 
-    public static void declareBindings() throws IOException {
+    public static void declareBindings() throws IOException, TimeoutException {
         Channel channel = ConnectionManager.getConnection().createChannel();
 
         // tworzenie linków (bindingów)
@@ -47,5 +47,13 @@ public class HeadersExchange {
         healthArgs.put("h1", "Header1");
         healthArgs.put("h2", "Header2");
         channel.queueBind("SportsQ", "my-header-exchange", "", sportsArgs);
+
+        Map<String, Object> educationArgs = new HashMap<>();
+        healthArgs.put("x-match", "any"); //
+        healthArgs.put("h1", "Header1");
+        healthArgs.put("h2", "Header2");
+        channel.queueBind("EducationQ", "my-header-exchange", "", educationArgs);
+
+        channel.close();
     }
 }
