@@ -18,7 +18,7 @@ public class AlternateExchange {
         channel.exchangeDeclare("alt.fanout.exchange", BuiltinExchangeType.FANOUT, true);
 
         Map<String, Object> arguments = new HashMap<>();
-        arguments.put("alternate-exchange", "alt.fanout.exchange");
+        arguments.put("alternate-exchange", "alt.fanout.exchange"); // wskazanie alternatywnego exchange
         channel.exchangeDeclare("alt.topic.exchange", BuiltinExchangeType.TOPIC, true, false, arguments);
     }
 
@@ -48,6 +48,11 @@ public class AlternateExchange {
 
     public static void publishMessage() throws IOException, TimeoutException {
         Channel channel = ConnectionManager.getConnection().createChannel();
+        channel.addReturnListener((replyCode, replyText, exchange, routingKey, properties, body) -> {
+            System.out.println("Wiadomość nieprzetworzona" + new String(body));
+            channel.basicPublish("alt.fanout.exchange", "education.health", null, body);
+
+        });
 
         String message = "Direct message - education.health\"";
         channel.basicPublish("alt.topic.exchange", "education.health", null, message.getBytes());
