@@ -13,3 +13,33 @@ metadata":{"description":"Default virtual host","tags":[],"default_queue_type":"
 ,"deliver_get_details":{"rate":0.0},"deliver_no_ack":0,"deliver_no_ack_details":{"rate":0.0},
 "get":3,"get_details":{"rate":0.0},"get_empty":1,
 "get_empty_details":{"rate":0.0},"get_no_ack":0,"get_no_ack_details":{"rate":0.0},"redeliver":0,"redeliver_details":{"rate":0.0}},"recv_oct_details":{"rate":0.0},"send_oct_details":{"rate":0.0},"messages_details":{"rate":0.0},"messages_unacknowledged_details":{"rate":0.0},"messages_ready_details":{"rate":0.0}}]
+
+# po instalacji na czysto
+rabbitmq-plugins enable rabbitmq_management # właczeniu gui
+rabbitmq-plugins disable rabbitmq_management # właczeniu gui
+
+add_user admin2 haslo123
+rabbitmqctl set_user_tags admin2 administrator
+rabbitmqctl set_permissions -p / admin2 ".*" ".*" ".*" # exchange, queues, vhost
+rabbitmqctl list_users
+rabbitmqctl delete_user guest
+
+Stop-Service RabbitMQ
+net start RabbitMQ
+rabbitmqctl.bat list_users - Windows
+
+konfiguracja ssl do gui
+management.listener.ssl=true
+management.listener.ssl_opts.cacertfile=/etc/ssl/certs/ca.pem
+management.listener.ssl_opts.certfile=/etc/ssl/certs/server.pem
+management.listener.ssl_opts.keyfile=/etc/ssl/certs/server.key
+
+C:\Users\CSComarch\AppData\Roaming\RabbitMQ
+# konfiguracja w pliku conf
+loopback_users.guest = true
+
+management.listener.port=9000
+
+listeners.tcp.default=5673
+listeners.tcp.1=5674
+listeners.tcp.2=5675
