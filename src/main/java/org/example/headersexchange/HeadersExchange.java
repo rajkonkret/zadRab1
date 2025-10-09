@@ -56,4 +56,10 @@ public class HeadersExchange {
 
         channel.close();
     }
+
+    public static void main(String[] args) throws IOException, TimeoutException {
+        HeadersExchange.declareQueues();
+        HeadersExchange.declareExchange();
+        HeadersExchange.declareBindings();
+    }
 }
