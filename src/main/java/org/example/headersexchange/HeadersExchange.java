@@ -81,7 +81,7 @@ public class HeadersExchange {
         Map<String, Object> headerMap2 = new HashMap<>();
         headerMap2.put("h2", "Header2");
 
-       properties = new AMQP.BasicProperties().builder()
+        properties = new AMQP.BasicProperties().builder()
                 .headers(headerMap2)
                 .build();
 
@@ -90,10 +90,20 @@ public class HeadersExchange {
 
         message = "Headers exchange example 3 h3";
         Map<String, Object> headerMap3 = new HashMap<>();
-        headerMap2.put("h3", "Header2");
+        headerMap3.put("h3", "Header2");
 
         properties = new AMQP.BasicProperties().builder()
                 .headers(headerMap3)
+                .build();
+
+        channel.basicPublish("my-header-exchange", "", properties, message.getBytes());
+
+        message = "Headers exchange example 3 h3 Header3";
+        Map<String, Object> headerMap4 = new HashMap<>();
+        headerMap4.put("h3", "Header3");
+
+        properties = new AMQP.BasicProperties().builder()
+                .headers(headerMap4)
                 .build();
 
         channel.basicPublish("my-header-exchange", "", properties, message.getBytes());
@@ -132,7 +142,17 @@ public class HeadersExchange {
             System.out.println(consumerTag);
         });
 
+        channel.basicConsume("VercomQ", true, ((consusmerTag, message) -> {
+            System.out.println("VercomQ Queue");
+            System.out.println(consusmerTag);
+            System.out.println("VercomQ: " + new String(message.getBody()));
+            System.out.println(message.getEnvelope());
+        }), consumerTag -> {
+            System.out.println(consumerTag);
+        });
+
     }
+
     public static void main(String[] args) throws IOException, TimeoutException {
         HeadersExchange.declareQueues();
         HeadersExchange.declareExchange();
