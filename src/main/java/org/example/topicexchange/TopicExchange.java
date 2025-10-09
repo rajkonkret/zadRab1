@@ -72,7 +72,16 @@ public class TopicExchange {
         Channel channel = ConnectionManager.getConnection().createChannel();
 
         String message = "Drink a lot of Water and stay Healthy";
-        channel.basicPublish("my-topic-exchange", "health.education", null, message.getBytes());
+//        channel.basicPublish("my-topic-exchange", "health.education", null, message.getBytes());
+//
+//        message = "Learn somthing new everyday";
+//        channel.basicPublish("my-topic-exchange", "education", null, message.getBytes());
+
+        message = "Stay fit in Mind and Body"; // wiadomosc nie trafi do kolejki
+        channel.basicPublish("my-topic-exchange", "education.health", null, message.getBytes());
+
+        message = "Just do it!"; // wiadomosc nie trafi do kolejki
+        channel.basicPublish("my-topic-exchange", "sports.sports", null, message.getBytes());
 
         channel.close();
     }
@@ -84,6 +93,24 @@ public class TopicExchange {
             System.out.println("HealthQ Queue");
             System.out.println(consusmerTag);
             System.out.println("HealthQ: " + new String(message.getBody()));
+            System.out.println(message.getEnvelope());
+        }), consumerTag -> {
+            System.out.println(consumerTag);
+        });
+
+        channel.basicConsume("SportsQ", true, ((consusmerTag, message) -> {
+            System.out.println("SportsQ Queue");
+            System.out.println(consusmerTag);
+            System.out.println("SportsQ: " + new String(message.getBody()));
+            System.out.println(message.getEnvelope());
+        }), consumerTag -> {
+            System.out.println(consumerTag);
+        });
+
+        channel.basicConsume("EducationQ", true, ((consusmerTag, message) -> {
+            System.out.println("EducationQ Queue");
+            System.out.println(consusmerTag);
+            System.out.println("EducationQ: " + new String(message.getBody()));
             System.out.println(message.getEnvelope());
         }), consumerTag -> {
             System.out.println(consumerTag);
