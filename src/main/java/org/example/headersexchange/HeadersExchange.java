@@ -57,6 +57,11 @@ public class HeadersExchange {
         educationArgs.put("h2", "Header2");
         channel.queueBind("EducationQ", "my-header-exchange", "", educationArgs);
 
+        Map<String, Object> vercomArgs = new HashMap<>();
+        vercomArgs.put("x-match", "any"); //
+        vercomArgs.put("h3", "Header3");
+        channel.queueBind("VercomQ", "my-header-exchange", "", vercomArgs);
+
         channel.close();
     }
 
